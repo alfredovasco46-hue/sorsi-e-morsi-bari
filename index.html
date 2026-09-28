@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorsi e Morsi Bari | Food, Wine &amp; Drink • Corso Vittorio Emanuele II, 73</title>
+  <meta name="description" content="Sorsi e Morsi Food, Wine &amp; Drink a Bari in Corso Vittorio Emanuele II, 73. I taglieri più famosi di Bari, Spaghetti all'Assassina, Friselle Gourmet, Il Ciccio, cucina tipica barese e vini pugliesi. Prenota il tuo tavolo online." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  </script>
+</head>
+<body>
+
+  <!-- HEADER MINIMAL -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="#home" class="brand-logo" onclick="closeMenuView('home', event)">
+        <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/logo-sorsi-e-morsi.jpg" onerror="this.onerror=null;this.src='logo-sorsi-e-morsi.jpg';" alt="Logo Sorsi e Morsi Bari" class="brand-logo-img" />
+        <div class="brand-text">
+          <span class="brand-name">Sorsi e Morsi</span>
+          <span class="brand-sub">Food, Wine &amp; Drink • Bari</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigazione principale">
+        <ul class="nav-links">
+          <li><a href="#menu" id="navLinkMenu" onclick="openMenuView(event)">Menu</a></li>
+          <li><a href="#prenota" onclick="closeMenuView('prenota', event)">Prenota</a></li>
+          <li><a href="#recensioni" onclick="closeMenuView('recensioni', event)">Recensioni</a></li>
+        </ul>
+      </nav>
+
+      <a href="#prenota" class="btn btn-primary btn-sm" onclick="closeMenuView('prenota', event)">Prenota Tavolo</a>
+    </div>
+  </header>
+
+  <!-- CONTENUTO HOME PAGE (SENZA IL MENU) -->
+  <div id="homeSections">
+    <!-- HERO / PRESENTAZIONE -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="hero-kicker">Corso Vittorio Emanuele II, 73 — Centro di Bari</span>
+          <h1 class="hero-title">Taglieri Pugliesi, Spaghetti all'Assassina, Il Ciccio &amp; Wine Bar.</h1>
+          <p class="hero-subtitle">
+            Nel cuore di Bari, a due passi da Bari Vecchia e dal Teatro Petruzzelli, Sorsi e Morsi celebra i sapori autentici di Puglia: dai nostri celebri taglieri con confetture fatte in casa allo Spaghetto all'Assassina, le friselle gourmet, il Ciccio farcito e i migliori vini e drink pugliesi.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#prenota" class="btn btn-primary" onclick="closeMenuView('prenota', event)">Prenota un Tavolo</a>
+            <a href="#menu" class="btn btn-outline" onclick="openMenuView(event)">Consulta il Menu</a>
+          </div>
+
+          <div class="hero-meta">
+            <div>
+              <strong>Orari di Apertura</strong>
+              <span>Lun – Ven: 11:00–00:00 • Sab – Dom: 11:00–15:30 / 18:30–00:00</span>
+            </div>
+            <div>
+              <strong>Prenotazioni &amp; Info</strong>
+              <span><a href="tel:+393927666689">392 766 6689</a> • <a href="https://www.instagram.com/sorsiemorsi.bari" target="_blank" rel="noopener">@sorsiemorsi.bari</a></span>
+            </div>
+            <div>
+              <strong>Ambienti</strong>
+              <span>Dehors su Corso Vittorio Emanuele II &amp; Sala Interna</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-photo-card">
+            <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/tagliere-sorsi-e-morsi.jpg" onerror="this.onerror=null;this.src='tagliere-sorsi-e-morsi.jpg';" alt="Il Gran Tagliere di Sorsi e Morsi Bari" class="hero-photo" />
+            <div class="hero-photo-caption">
+              <div>
+                <strong style="color:var(--text-primary); display:block;">I Taglieri più Famosi di Bari</strong>
+                <span style="color:var(--text-secondary);">Salumi DOP, formaggi pugliesi e confetture artigianali</span>
+              </div>
+              <span class="status-badge confirmed">Corso Vittorio 73</span>
+            </div>
+          </div>
+
+          <div class="hero-mini-gallery">
+            <div class="hero-mini-item">
+              <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/assassina-sorsi-e-morsi.jpg" onerror="this.onerror=null;this.src='assassina-sorsi-e-morsi.jpg';" alt="Spaghetti all'Assassina Sorsi e Morsi Bari" loading="lazy" />
+              <span>Spaghetti all'Assassina</span>
+            </div>
+            <div class="hero-mini-item">
+              <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/friselle-gourmet.jpg" onerror="this.onerror=null;this.src='friselle-gourmet.jpg';" alt="Trio di Friselle Gourmet Sorsi e Morsi Bari" loading="lazy" />
+              <span>Friselle Gourmet</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEZIONE PRENOTAZIONE MINIMAL -->
+    <section id="prenota" class="booking-section">
+      <div class="container booking-minimal-layout">
+        <div>
+          <span class="section-kicker">Prenotazione Online Diretta</span>
+          <h2 class="section-title">Prenota un Tavolo</h2>
+          <p class="section-desc" style="margin-bottom:24px;">
+            Come indicato sui nostri canali social ufficiali, prenota comodamente online il tuo tavolo per pranzo, aperitivo rinforzato o cena, scegliendo tra il Dehors su Corso Vittorio Emanuele II e la Sala Interna.
+          </p>
+          <div style="font-size:0.9rem; color:var(--text-secondary); display:grid; gap:10px;">
+            <div><strong style="color:var(--text-primary);">Indirizzo:</strong> Corso Vittorio Emanuele II, 73 — 70122 Bari (BA)</div>
+            <div><strong style="color:var(--text-primary);">Lun – Ven:</strong> 11:00 – 00:00 (Pranzo, Aperitivo &amp; Cena)</div>
+            <div><strong style="color:var(--text-primary);">Sab – Dom:</strong> 11:00 – 15:30 / 18:30 – 00:00</div>
+            <div><strong style="color:var(--text-primary);">Telefono:</strong> <a href="tel:+393927666689" style="text-decoration:underline;">392 766 6689</a></div>
+            <div><strong style="color:var(--text-primary);">Instagram Ufficiale:</strong> <a href="https://www.instagram.com/sorsiemorsi.bari" target="_blank" rel="noopener" style="text-decoration:underline;">@sorsiemorsi.bari</a></div>
+          </div>
+        </div>
+
+        <div class="booking-minimal-card">
+          <form id="userBookingForm" onsubmit="handleUserBookingSubmit(event)" style="display:grid; gap:16px;">
+            <div class="form-grid-3">
+              <div class="field">
+                <label for="bookDate">Data</label>
+                <input type="date" id="bookDate" class="form-control" required />
+              </div>
+              <div class="field">
+                <label for="bookTime">Orario (Pranzo / Aperitivo / Cena)</label>
+                <select id="bookTime" class="form-control" required></select>
+              </div>
+              <div class="field">
+                <label for="bookGuests">Persone</label>
+                <select id="bookGuests" class="form-control" required>
+                  <option value="1">1 persona</option>
+                  <option value="2" selected>2 persone</option>
+                  <option value="3">3 persone</option>
+                  <option value="4">4 persone</option>
+                  <option value="5">5 persone</option>
+                  <option value="6">6 persone</option>
+                  <option value="8">8 persone</option>
+                  <option value="10">10 persone</option>
+                  <option value="12">12 persone</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="field">
+                <label for="bookArea">Preferenza Ambiente</label>
+                <select id="bookArea" class="form-control" required>
+                  <option value="Dehors Corso Vittorio">Dehors Corso Vittorio</option>
+                  <option value="Sala Interna & Wine Bar">Sala Interna &amp; Wine Bar</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="bookName">Nome e Cognome</label>
+                <input type="text" id="bookName" class="form-control" placeholder="Il tuo nome" required />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="field">
+                <label for="bookPhone">Telefono</label>
+                <input type="tel" id="bookPhone" class="form-control" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="Es. 347 123 4567" required />
+                <small id="bookPhoneError" style="display:none; color:var(--danger); font-size:0.78rem; margin-top:4px;"></small>
+              </div>
+              <div class="field">
+                <label for="bookNotes">Note (Opzionale)</label>
+                <input type="text" id="bookNotes" class="form-control" placeholder="Allergie, aperitivo tagliere, seggiolone..." />
+              </div>
+            </div>
+
+            <button type="submit" id="bookingSubmitBtn" class="btn btn-primary" style="width:100%; margin-top:4px;">
+              Conferma Prenotazione
+            </button>
+          </form>
+
+          <div id="bookingConfirmationBox" style="display:none;"></div>
+
+          <div class="lookup-drawer">
+            <button type="button" class="lookup-toggle-link" onclick="toggleLookupBox()">
+              Hai già prenotato? Verifica lo stato o annulla con il tuo codice
+            </button>
+            <div id="lookupBox" style="display:none; margin-top:14px;">
+              <form onsubmit="handleLookupBooking(event)" style="display:flex; gap:10px; margin-bottom:12px;">
+                <input type="text" id="lookupBookingInput" class="form-control" placeholder="Codice (es. SEM-8412) o telefono" required />
+                <button type="submit" class="btn btn-outline btn-sm">Verifica</button>
+              </form>
+              <div id="lookupBookingResult"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEZIONE RECENSIONI -->
+    <section id="recensioni" class="reviews-section">
+      <div class="container">
+        <div class="reviews-top-bar">
+          <div>
+            <span class="section-kicker">Cosa Dicono di Noi</span>
+            <h2 class="section-title" style="margin-bottom:4px;">Le Recensioni dei Clienti</h2>
+            <p class="section-desc">Le opinioni di chi ha provato i nostri taglieri, l'Assassina e la cucina di Sorsi e Morsi in Corso Vittorio Emanuele II.</p>
+          </div>
+
+          <div class="rating-pill-box">
+            <span id="avgRatingScore" class="rating-number">4.6</span>
+            <div>
+              <div style="font-size:0.84rem; font-weight:600;">Valutazione Media su 5</div>
+              <div id="totalReviewsCount" style="font-size:0.78rem; color:var(--text-secondary);">Oltre 2.600 recensioni verificate</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="reviewsList" class="reviews-grid"></div>
+
+        <div class="new-review-box">
+          <h3 style="font-family:var(--font-display); font-size:1.25rem; margin-bottom:16px;">Lascia una Recensione</h3>
+          <form onsubmit="handleNewReviewSubmit(event)" style="display:grid; gap:14px;">
+            <div class="form-grid-3">
+              <div class="field">
+                <label for="revAuthor">Nome</label>
+                <input type="text" id="revAuthor" class="form-control" placeholder="Il tuo nome" required />
+              </div>
+              <div class="field">
+                <label for="revRating">Valutazione</label>
+                <select id="revRating" class="form-control">
+                  <option value="5" selected>5 su 5 — Eccellente</option>
+                  <option value="4">4 su 5 — Molto buono</option>
+                  <option value="3">3 su 5 — Buono</option>
+                  <option value="2">2 su 5 — Discreto</option>
+                  <option value="1">1 su 5 — Insufficiente</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="revDish">Piatto provato (Opzionale)</label>
+                <input type="text" id="revDish" class="form-control" placeholder="Es. Gran Tagliere, Assassina, Il Ciccio..." />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="revText">La tua recensione</label>
+              <textarea id="revText" rows="2" class="form-control" placeholder="Racconta la tua esperienza da Sorsi e Morsi..." required></textarea>
+            </div>
+
+            <div>
+              <button type="submit" class="btn btn-primary btn-sm">Pubblica Recensione</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SEZIONE MENU UFFICIALE (NASCOSTA DI DEFAULT, APPARE SOLO AL CLICK) -->
+  <section id="menu" class="menu-section" style="display:none;">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:28px;">
+        <div class="section-header" style="margin-bottom:0;">
+          <span class="section-kicker">Food, Wine &amp; Drink — Bari</span>
+          <h2 class="section-title">Il Menu di Sorsi e Morsi</h2>
+          <p class="section-desc">
+            Scopri i nostri taglieri pugliesi, gli Spaghetti all'Assassina, i primi baresi, il Ciccio farcito, la carta dei vini e i drink.
+          </p>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeMenuView('home', event)">
+          Torna alla Home
+        </button>
+      </div>
+
+      <div class="menu-toolbar">
+        <div class="menu-tabs" role="tablist">
+          <button type="button" class="cat-tab active" data-cat="all" onclick="setMenuCategory('all', this)">Tutto</button>
+          <button type="button" class="cat-tab" data-cat="taglieri" onclick="setMenuCategory('taglieri', this)">Taglieri &amp; Antipasti</button>
+          <button type="button" class="cat-tab" data-cat="primi" onclick="setMenuCategory('primi', this)">Primi &amp; Assassina</button>
+          <button type="button" class="cat-tab" data-cat="secondi" onclick="setMenuCategory('secondi', this)">Secondi Mare &amp; Terra</button>
+          <button type="button" class="cat-tab" data-cat="cicci-pizze" onclick="setMenuCategory('cicci-pizze', this)">Il Ciccio &amp; Pizze</button>
+          <button type="button" class="cat-tab" data-cat="vini-drink" onclick="setMenuCategory('vini-drink', this)">Wine &amp; Drink</button>
+          <button type="button" class="cat-tab" data-cat="dolci" onclick="setMenuCategory('dolci', this)">Dolci</button>
+        </div>
+
+        <div class="menu-search">
+          <input type="search" id="menuSearchInput" class="form-control" placeholder="Cerca piatto, tagliere o vino..." />
+        </div>
+      </div>
+
+      <div id="menuGrid" class="menu-sections-container"></div>
+
+      <div class="menu-footnote">
+        <span id="menuServiceNote">Coperto e servizio 2,00 € • Prenotazione online consigliata per Pranzo, Aperitivo Rinforzato e Cena</span>
+        <span>Disponibili opzioni vegetariane, senza glutine e senza lattosio su richiesta al personale di sala</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CON MAPPA E CONTATTI -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom:16px;">
+            <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/logo-sorsi-e-morsi.jpg" onerror="this.onerror=null;this.src='logo-sorsi-e-morsi.jpg';" alt="Logo Sorsi e Morsi Bari" class="brand-logo-img" />
+            <div class="brand-text">
+              <span class="brand-name">Sorsi e Morsi</span>
+              <span class="brand-sub">Food, Wine &amp; Drink • Bari</span>
+            </div>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:16px;">
+            Corso Vittorio Emanuele II, 73 — 70122 Bari (BA)<br />
+            Lun – Ven: 11:00 – 00:00 • Sab – Dom: 11:00 – 15:30 / 18:30 – 00:00<br />
+            Telefono: <a href="tel:+393927666689" style="color:var(--text-primary); font-weight:600;">392 766 6689</a>
+          </p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="https://www.instagram.com/sorsiemorsi.bari" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Instagram @sorsiemorsi.bari</a>
+            <a href="https://www.google.com/maps/place/Sorsi+e+Morsi+Food,+Wine+%26+Drink/@41.1263975,16.8698707,17z/data=!3m1!4b1!4m6!3m5!1s0x1347e9e70ef88de9:0x407b1f5e794bcb3e!8m2!3d41.1263975!4d16.8698707!16s%2Fg%2F11rfmzzyq8?hl=it" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Apri su Google Maps</a>
+            <a href="tel:+393927666689" class="btn btn-outline btn-sm">Chiama il Locale</a>
+          </div>
+        </div>
+
+        <div class="map-embed">
+          <iframe
+            title="Mappa Sorsi e Morsi Bari"
+            src="https://maps.google.com/maps?q=41.1263975,16.8698707&hl=it&z=17&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Sorsi e Morsi — Food, Wine &amp; Drink • Corso Vittorio Emanuele II, 73 — 70122 Bari (BA)</span>
+        <span>Taglieri Pugliesi • Cucina Tipica Barese • Il Ciccio &amp; Wine Bar</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
