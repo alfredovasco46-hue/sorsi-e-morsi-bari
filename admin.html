@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Area Riservata Admin | Sorsi e Morsi Bari</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  </script>
+</head>
+<body>
+
+  <!-- SCHERMATA DI LOGIN PROTETTA -->
+  <main id="adminLoginScreen" class="admin-login-screen">
+    <div class="admin-login-card">
+      <div class="brand-logo" style="margin-bottom:24px;">
+        <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/logo-sorsi-e-morsi.jpg" onerror="this.onerror=null;this.src='logo-sorsi-e-morsi.jpg';" alt="Logo Sorsi e Morsi Bari" class="brand-logo-img" />
+        <div class="brand-text">
+          <span class="brand-name">Sorsi e Morsi</span>
+          <span class="brand-sub">Gestionale Riservato • Bari</span>
+        </div>
+      </div>
+
+      <h1 style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:6px;">Accesso Amministratore</h1>
+      <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:22px;">
+        Inserisci le credenziali riservate per accedere alla gestione di prenotazioni, tavoli, menu e recensioni di Sorsi e Morsi.
+      </p>
+
+      <form onsubmit="handleAdminLogin(event)" style="display:grid; gap:14px;">
+        <div class="field">
+          <label for="adminUsername">Nome Utente</label>
+          <input type="text" id="adminUsername" class="form-control" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="adminPassword">Password</label>
+          <input type="password" id="adminPassword" class="form-control" autocomplete="current-password" required />
+        </div>
+        <div id="adminLoginError" style="display:none; font-size:0.84rem; color:var(--danger);">
+          Credenziali non valide. Riprova.
+        </div>
+        <button type="submit" id="adminLoginBtn" class="btn btn-primary" style="width:100%; margin-top:4px;">
+          Accedi al Gestionale
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- INTERFACCIA GESTIONALE (VISIBILE SOLO DOPO AUTENTICAZIONE) -->
+  <div id="adminShell" class="admin-shell">
+    <header class="admin-header-bar">
+      <div class="container" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+        <div class="brand-logo">
+          <img src="https://rwzkrvmkhmkcqrvqcikd.supabase.co/storage/v1/object/public/assets/logo-sorsi-e-morsi.jpg" onerror="this.onerror=null;this.src='logo-sorsi-e-morsi.jpg';" alt="Logo Sorsi e Morsi Bari" class="brand-logo-img" />
+          <div class="brand-text">
+            <span class="brand-name">Sorsi e Morsi — Gestionale</span>
+            <span class="brand-sub">Corso Vittorio Emanuele II, 73 • Bari</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="exportBookingsCSV()">Esporta CSV</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="handleAdminLogout()">Esci</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="padding-bottom:64px;">
+      <!-- NAVIGAZIONE SEZIONI ADMIN -->
+      <div class="admin-tabs-bar">
+        <button type="button" class="cat-tab active" data-tab="bookings" onclick="switchAdminTab('bookings')">Prenotazioni e Tavoli</button>
+        <button type="button" class="cat-tab" data-tab="menu" onclick="switchAdminTab('menu')">Menu e Disponibilità</button>
+        <button type="button" class="cat-tab" data-tab="reviews" onclick="switchAdminTab('reviews')">Recensioni</button>
+        <button type="button" class="cat-tab" data-tab="settings" onclick="switchAdminTab('settings')">Impostazioni Sala</button>
+      </div>
+
+      <!-- RIEPILOGO DATI -->
+      <div class="admin-kpi-row">
+        <div class="admin-kpi-box">
+          <span>Prenotazioni Filtrate</span>
+          <strong id="kpiTotalBookings">0</strong>
+        </div>
+        <div class="admin-kpi-box">
+          <span>Coperti Totali</span>
+          <strong id="kpiTotalGuests">0</strong>
+        </div>
+        <div class="admin-kpi-box">
+          <span>In Attesa di Conferma</span>
+          <strong id="kpiPendingCount">0</strong>
+        </div>
+        <div class="admin-kpi-box">
+          <span>Media Recensioni</span>
+          <strong id="kpiAvgRating">5.0</strong>
+        </div>
+      </div>
+
+      <!-- SEZIONE 1: PRENOTAZIONI E TAVOLI -->
+      <div id="adminView-bookings" class="admin-view">
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:16px; margin-bottom:20px; display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; justify-content:space-between;">
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <div class="field">
+              <label for="adminFilterDate">Data</label>
+              <input type="date" id="adminFilterDate" class="form-control" style="padding:8px 12px;" />
+            </div>
+            <div class="field">
+              <label for="adminFilterStatus">Stato</label>
+              <select id="adminFilterStatus" class="form-control" style="padding:8px 12px;">
+                <option value="all">Tutti</option>
+                <option value="pending">In attesa</option>
+                <option value="confirmed">Confermate</option>
+                <option value="completed">Completate</option>
+                <option value="cancelled">Annullate</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="adminFilterArea">Area</label>
+              <select id="adminFilterArea" class="form-control" style="padding:8px 12px;">
+                <option value="all">Tutte</option>
+                <option value="Dehors Corso Vittorio">Dehors Corso Vittorio</option>
+                <option value="Sala Interna & Wine Bar">Sala Interna &amp; Wine Bar</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="adminSearchInput">Ricerca</label>
+              <input type="search" id="adminSearchInput" class="form-control" style="padding:8px 12px;" placeholder="Nome, telefono o codice..." />
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="clearDateFilter()">Mostra Tutte le Date</button>
+        </div>
+
+        <div class="admin-table-wrap" style="margin-bottom:28px;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Codice</th>
+                <th>Cliente</th>
+                <th>Data e Ora</th>
+                <th>Persone</th>
+                <th>Area</th>
+                <th>Tavolo</th>
+                <th>Stato e Note</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody id="adminBookingsTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="form-grid-2" style="align-items:start;">
+          <!-- NUOVA PRENOTAZIONE TELEFONICA -->
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:22px;">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:14px;">Aggiungi Prenotazione Telefonica / Walk-in</h3>
+            <form onsubmit="handleAdminAddManualBooking(event)" style="display:grid; gap:12px;">
+              <div class="form-grid-2">
+                <input type="text" id="admBookName" class="form-control" placeholder="Nome Cliente" required />
+                <input type="tel" id="admBookPhone" class="form-control" inputmode="tel" maxlength="16" placeholder="Telefono (es. 347 123 4567)" />
+              </div>
+              <div class="form-grid-3">
+                <input type="date" id="admBookDate" class="form-control" required />
+                <select id="admBookTime" class="form-control">
+                  <optgroup label="Pranzo">
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                  </optgroup>
+                  <optgroup label="Aperitivo &amp; Cena">
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30" selected>20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                  </optgroup>
+                </select>
+                <input type="number" id="admBookGuests" class="form-control" value="4" min="1" max="30" required />
+              </div>
+              <div class="form-grid-2">
+                <select id="admBookArea" class="form-control">
+                  <option value="Dehors Corso Vittorio">Dehors Corso Vittorio</option>
+                  <option value="Sala Interna & Wine Bar">Sala Interna &amp; Wine Bar</option>
+                </select>
+                <select id="admBookTable" class="form-control">
+                  <option value="">Tavolo (Opzionale)</option>
+                  <option value="D1">D1 (Dehors 2p)</option>
+                  <option value="D2">D2 (Dehors 4p)</option>
+                  <option value="D3">D3 (Dehors 4p)</option>
+                  <option value="D4">D4 (Dehors 6p)</option>
+                  <option value="D5">D5 (Dehors 8p)</option>
+                  <option value="D6">D6 (Dehors 4p)</option>
+                  <option value="S1">S1 (Sala 2p)</option>
+                  <option value="S2">S2 (Sala 4p)</option>
+                  <option value="S3">S3 (Sala 4p)</option>
+                  <option value="S4">S4 (Sala 6p)</option>
+                  <option value="S5">S5 (Sala 8p)</option>
+                  <option value="S6">S6 (Sala 4p)</option>
+                </select>
+              </div>
+              <input type="text" id="admBookNotes" class="form-control" placeholder="Note..." />
+              <button type="submit" class="btn btn-primary btn-sm">Registra Prenotazione</button>
+            </form>
+          </div>
+
+          <!-- STATO TAVOLI -->
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:22px;">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:4px;">Occupazione Tavoli</h3>
+            <p style="font-size:0.82rem; color:var(--text-secondary);">Tavoli assegnati per la data selezionata.</p>
+            <div id="adminTablesFloorplan" class="tables-grid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEZIONE 2: GESTIONE MENU -->
+      <div id="adminView-menu" class="admin-view" style="display:none;">
+        <div class="form-grid-2" style="align-items:start;">
+          <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:22px;">
+            <h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:14px;">Aggiungi Piatto o Drink al Menu</h3>
+            <form onsubmit="handleAdminAddDish(event)" style="display:grid; gap:12px;">
+              <input type="text" id="newDishName" class="form-control" placeholder="Nome del piatto o drink" required />
+              <div class="form-grid-2">
+                <select id="newDishCategory" class="form-control">
+                  <option value="taglieri">Taglieri &amp; Antipasti</option>
+                  <option value="primi">Primi &amp; Assassina</option>
+                  <option value="secondi">Secondi Mare &amp; Terra</option>
+                  <option value="cicci-pizze">Il Ciccio &amp; Pizze</option>
+                  <option value="vini-drink">Wine &amp; Drink</option>
+                  <option value="dolci">Dolci Artigianali</option>
+                </select>
+                <input type="number" step="0.50" id="newDishPrice" class="form-control" placeholder="Prezzo €" required />
+              </div>
+              <textarea id="newDishDesc" rows="2" class="form-control" placeholder="Ingredienti e descrizione"></textarea>
+              <button type="submit" class="btn btn-primary btn-sm">Salva nel Menu</button>
+            </form>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Piatto</th>
+                  <th>Categoria</th>
+                  <th>Prezzo (€)</th>
+                  <th>Stato</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="adminMenuTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEZIONE 3: RECENSIONI -->
+      <div id="adminView-reviews" class="admin-view" style="display:none;">
+        <div id="adminReviewsList"></div>
+      </div>
+
+      <!-- SEZIONE 4: IMPOSTAZIONI SALA -->
+      <div id="adminView-settings" class="admin-view" style="display:none;">
+        <div style="max-width:540px; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:24px;">
+          <h3 style="font-family:var(--font-display); font-size:1.25rem; margin-bottom:16px;">Capienza e Disponibilità Sala</h3>
+          <form onsubmit="handleSaveAdminSettings(event)" style="display:grid; gap:16px;">
+            <div class="form-grid-2">
+              <div class="field">
+                <label for="setIndoorMax">Max Coperti Sala Interna &amp; Wine Bar</label>
+                <input type="number" id="setIndoorMax" class="form-control" min="10" max="200" required />
+              </div>
+              <div class="field">
+                <label for="setOutdoorMax">Max Coperti Dehors Corso Vittorio</label>
+                <input type="number" id="setOutdoorMax" class="form-control" min="0" max="200" required />
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px;">
+              <input type="checkbox" id="setOutdoorEnabled" style="width:18px; height:18px;" />
+              <label for="setOutdoorEnabled" style="font-size:0.9rem;">Abilita prenotazioni per il Dehors su Corso Vittorio Emanuele II</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm" style="width:fit-content;">Salva Impostazioni</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
